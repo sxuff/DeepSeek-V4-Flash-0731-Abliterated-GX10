@@ -1,0 +1,135 @@
+{
+  "schema": "ds4-headroom-speed-protocol-v2",
+  "run_id": "primary-v2-20260820T225851Z",
+  "frozen_at_utc": "2026-08-20T22:58:51Z",
+  "primary_trace_count_at_freeze": 0,
+  "scope": "Matched single-GX10 operator pilot on the exact abliterated Headroom128 target",
+  "claim_if_passed": "Entrpi ds4 v0.6.2 plus the pinned 0731 Q2K/Q8 DSpark drafter increases served wall tokens per second on the exact apetersson abliterated Headroom128 target versus the same runtime with speculation disabled, without a material regression on the frozen deterministic canaries.",
+  "hardware": {
+    "host_class": "ASUS GX10 / NVIDIA GB10",
+    "compute_capability": "sm_121",
+    "memory_class": "128 GB unified, about 119 GiB visible",
+    "power": "runtime default 100 percent"
+  },
+  "target": {
+    "repo": "apetersson/DeepSeek-V4-Flash-0731-Abliterated-DS4-Headroom128",
+    "revision": "08f6c6225ab4d29a735ab7d48d46bd0a3a767a07",
+    "file": "DeepSeek-V4-Flash-0731-Abliterated-DS4-Headroom128.gguf",
+    "bytes": 86720111552,
+    "sha256": "55a46e7e9a51f3d6708559b8b284c3e60f6b97f9bab1f2c9633948c8331e99ee"
+  },
+  "runtime": {
+    "repo": "Entrpi/ds4",
+    "revision": "d183482b413ecd2e3b540b290e6497437e9fbb73",
+    "version": "v0.6.2",
+    "build": "make cuda-spark",
+    "context_tokens": 32768,
+    "max_server_output_tokens": 2048,
+    "continuous_banks": 2,
+    "prefill_chunk": 1024,
+    "memory_floor_gib": 6
+  },
+  "arms": {
+    "plain": {
+      "treatment": "same target and runtime, --no-spec",
+      "service_sha256": "835edab43b4309588e0a5d7b5146f37e521bf56a4289ef52fd0414c6ded8857c"
+    },
+    "dspark": {
+      "treatment": "same target and runtime, --dspark with the pinned clean 0731 Q2K/Q8 drafter and shipped quench policy",
+      "drafter_repo": "bleysg/DeepSeek-V4-Flash-DSpark-drafter-GGUF",
+      "drafter_revision": "81c6fdd38f9582da45ba27f0ed7b63bcd3ea3b62",
+      "drafter_file": "DSpark-drafter-Q2K-Q8-0731.gguf",
+      "drafter_bytes": 6971241504,
+      "drafter_sha256": "8fa269560dc76fd73e4233ad9b1938b5f65dd363381fd9b1a5c6183f7d12d686",
+      "service_sha256": "0bd59ea020f1f1e8ad61e84a61b19da01be0327ac7ff96b09cfec6504b44ae02",
+      "note": "The target repository's bundled abliterated support GGUF uses the older metadata/name contract and failed the v0.6.2 validator before inference. It is retained as compatibility evidence, not used in the primary arm."
+    }
+  },
+  "request_contract": {
+    "endpoint": "/v1/chat/completions",
+    "model": "deepseek-chat",
+    "thinking": "disabled by the served model alias",
+    "temperature": 0,
+    "top_p": 1,
+    "min_p": 0,
+    "stream": false,
+    "repetitions_per_fixture": 3,
+    "warmups_per_fixture": 1,
+    "fresh_nonce_per_speed_request": true,
+    "nonce_bytes_identical_between_arms": true,
+    "quality_canaries_have_no_nonce_prefix": true,
+    "speed_metric": "completion_tokens divided by non-streaming request wall seconds, reported explicitly as served wall tok/s"
+  },
+  "fixtures": {
+    "manifest_sha256": "bb3b666cb7fa72d30390211f2b984a92a790b52341a4ef0ced53ccd2fe9bc421",
+    "speed_fixtures": 4,
+    "quality_canaries": 8,
+    "measured_rows_per_arm": 36,
+    "quality_rows_per_arm": 24,
+    "families": ["code", "structured JSON", "reasoning", "prose", "tool call", "extraction", "sequence"]
+  },
+  "harness": {
+    "sha256": "1164f3b2fc4d2e3a98079a20b263c99b0d8315f6ead82e637b3aec6d1191fd54",
+    "generated_code_sandbox": "Docker python:3.13-alpine, no network, read-only root, unprivileged UID, all capabilities dropped, no-new-privileges, 1 CPU, 256 MiB, 64 PIDs, 20 second wall limit, execution canary required"
+  },
+  "primary_analysis": {
+    "unit": "fixture median across three repetitions",
+    "overall_speedup": "geometric mean of the four DSpark/plain fixture-median ratios",
+    "eligible_speed_row": "HTTP 200, no error, finite elapsed time, positive completion_tokens, validator result retained",
+    "quality_rate": "passed deterministic validators over all 24 planned canary rows",
+    "exact_output_identity": "reported by request family and repetition but not required for semantic GO"
+  },
+  "go_gates": [
+    "overall served-wall speedup at least 1.10x",
+    "no speed fixture below 0.95x",
+    "at least 23 of 24 deterministic quality canaries pass in each arm",
+    "no repeated failure of the tool-call or sandboxed-code canary",
+    "zero transport/runtime-error measured rows",
+    "minimum MemAvailable at least 6 GiB",
+    "swap growth no more than 512 MiB from each arm boot baseline",
+    "no unrelated model-scale process introduced during measurement"
+  ],
+  "followups_if_go": [
+    "repeat the winning DSpark arm after a fresh reload",
+    "run a bounded concurrency ladder at 1, 2, 4, and 8 requests",
+    "exercise a real agent/tool loop",
+    "package the result as a matched pilot, not a universal model claim"
+  ],
+  "followups_if_no_go": [
+    "retain the result as a runtime/drafter compatibility or workload no-go",
+    "use DS4_DSPARK_TRACE and the offline replayer to test a bounded quench-policy amendment",
+    "do not tune on quality canary answers"
+  ],
+  "safety": {
+    "watchdog_sha256": "21e9edc0f595739f6a71968230b9092e08693758ce5ba06c89259074c7d15f2a",
+    "server_cgroup_memory_swap_max": 0,
+    "minimum_memavailable_gib": 6,
+    "maximum_swap_growth_mib": 512,
+    "action_on_breach": "kill only the active ds4-speed experiment unit and retain incident evidence"
+  },
+  "superseded_primary_v1": {
+    "run_id": "primary-v1-20260820T223537Z",
+    "status": "ineligible for the matched primary claim",
+    "reason": "The harness derived speed-request nonces from arm plus fixture plus repetition, so the two arms did not receive identical prompt bytes. It also prefixed deterministic quality canaries with an instruction-conflicting nonce sentence.",
+    "retained_evidence": "All 72 rows and safety telemetry are preserved. They are discovery evidence only.",
+    "v2_corrections": [
+      "derive speed nonces from fixture and repetition only",
+      "remove nonce prefixes from quality canaries",
+      "replace an ambiguous reasoning fixture with an unambiguous calculation whose answer is 89",
+      "score fenced JSON for semantic content while retaining strict-envelope evidence",
+      "align the code hidden test with the prompt's standard overlap-or-shared-endpoint contract"
+    ]
+  },
+  "preprimary_smoke": {
+    "excluded": true,
+    "result": "candidate loaded on sm_121, /v1/models returned HTTP 200, arithmetic canary passed, DSpark accepted 32 of 34 drafted tokens on the warm-up trace; the 65,536-context, four-bank smoke was then stopped by the frozen swap-growth watchdog at 551,968,768 bytes, 15,097,856 bytes over the 512 MiB limit",
+    "amendment_1": {
+      "at_utc": "2026-08-20T22:36:30Z",
+      "primary_trace_count_before_amendment": 0,
+      "reason": "The pre-primary smoke crossed the frozen swap-growth guard while retaining 16.4 GiB MemAvailable. Preserve the guard and reduce only the matched operating envelope.",
+      "old": {"context_tokens": 65536, "continuous_banks": 4, "prefill_chunk": 4096},
+      "new": {"context_tokens": 32768, "continuous_banks": 2, "prefill_chunk": 1024},
+      "unchanged": ["target", "runtime commit", "drafter", "request fixtures", "sampler", "repetitions", "quality gates", "memory and swap guards"]
+    }
+  }
+}
