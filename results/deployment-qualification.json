@@ -1,0 +1,41 @@
+{
+  "schema": "ds4-headroom-production-qualification-v1",
+  "verified_at_utc": "2026-08-20T23:24:11Z",
+  "deployment": {
+    "target": "apetersson/DeepSeek-V4-Flash-0731-Abliterated-DS4-Headroom128@08f6c6225ab4d29a735ab7d48d46bd0a3a767a07",
+    "runtime": "Entrpi/ds4@d183482b413ecd2e3b540b290e6497437e9fbb73",
+    "drafter": "bleysg/DeepSeek-V4-Flash-DSpark-drafter-GGUF@81c6fdd38f9582da45ba27f0ed7b63bcd3ea3b62",
+    "context_tokens": 32768,
+    "continuous_banks": 2,
+    "prefill_chunk": 1024,
+    "memory_floor_gib": 6
+  },
+  "service_state": {
+    "ds4_model_enabled": true,
+    "ds4_model_active": true,
+    "watchdog_active": true,
+    "authenticated_proxy_enabled": true,
+    "authenticated_proxy_active": true,
+    "previous_qwen_model_enabled": false,
+    "previous_qwen_proxy_enabled": false,
+    "qwen_weights_and_units_retained_for_rollback": true
+  },
+  "live_checks": {
+    "unauthorized_models_http": 401,
+    "authorized_models_http": 200,
+    "served_model": "deepseek-v4-flash",
+    "chat_http": 200,
+    "sequence_exact_1_to_20": true,
+    "completion_tokens": 39,
+    "tool_http": 200,
+    "tool_call_valid": true,
+    "tool_finish_reason": "tool_calls"
+  },
+  "watchdog": {
+    "mem_available_bytes": 20000690176,
+    "swap_growth_bytes": 2404352,
+    "reserve_bytes": 6442450944,
+    "max_swap_growth_bytes": 536870912,
+    "incident": false
+  }
+}

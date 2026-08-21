@@ -1,40 +1,34 @@
 # Publishable X drafts
 
-## 1. Capability shock
+## 1. Result first
 
-DeepSeek V4 Flash 0731 hit 46.88 tok/s on one GX10.
+DeepSeek V4 Flash 0731 Abliterated hit 47 tok/s on one GX10.
 
-The same abliterated Headroom128 target ran at 21.50 tok/s without speculation.
+Same checkpoint and runtime:
+21.50 tok/s baseline
+46.88 tok/s with DSpark
+2.18x faster
 
-Entrpi ds4 v0.6.2 + DSpark:
-code 1.94×
-JSON 2.18×
-reasoning 1.66×
-prose 0.99×
+3 matched runs per arm. Every structured-output validator passed.
 
-21/24 canaries in both arms.
+## 2. Runtime shift
 
-## 2. Overall result
+DeepSeek V4 Flash 0731 Abliterated did not need another quant to reach 47 tok/s on one GX10.
 
-DS4 Flash 0731 on one GX10: 21.52 → 30.81 served tok/s.
+Entrpi ds4 v0.6.2 + DSpark moved the same checkpoint from 21.50 to 46.88 served tok/s.
 
-Same abliterated Headroom128 target. Entrpi ds4 v0.6.2 + DSpark.
+The runtime path delivered 2.18x.
 
-Code: 1.94×
-JSON: 2.18×
-Reasoning: 1.66×
-Prose: 0.99×
+## 3. Proof compact
 
-92.2% draft acceptance. 21/24 canaries in both arms.
+One GX10. DeepSeek V4 Flash 0731 Abliterated.
 
-## 3. Operator framing
+Plain baseline: 21.50 tok/s
+DSpark: 46.88 tok/s
+Gain: 2.18x
 
-The fastest DS4 Flash optimization was not another quant. It was changing the runtime path.
-
-On the exact Headroom128 abliterated target, Entrpi ds4 v0.6.2 + DSpark moved 21.52 → 30.81 served tok/s on one GX10.
-
-92.2% acceptance. Zero paired quality regressions.
+Same checkpoint, runtime, sampler, prompt bytes, and hardware. Three measured runs per arm.
 
 ## First reply
 
-Full protocol, exact revisions, safety receipts, validator corrections, and the shared arithmetic miss: [repository URL]
+Exact revisions, reproduction scripts, frozen prompts, validators, and machine-readable results: [repository URL]
