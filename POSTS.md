@@ -31,4 +31,5 @@ Same checkpoint, runtime, sampler, prompt bytes, and hardware. Three measured ru
 
 ## First reply
 
-Exact revisions, reproduction scripts, frozen prompts, validators, and machine-readable results: [repository URL]
+Exact revisions, reproduction scripts, frozen prompts, validators, and machine-readable results:
+https://github.com/sxuff/DeepSeek-V4-Flash-0731-Abliterated-GX10
