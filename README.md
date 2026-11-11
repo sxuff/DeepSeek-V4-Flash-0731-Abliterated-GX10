@@ -1,5 +1,13 @@
 # DeepSeek V4 Flash 0731 Abliterated at 47 tok/s on one GX10
 
+## Run it
+
+```bash
+git clone https://github.com/sxuff/DeepSeek-V4-Flash-0731-Abliterated-GX10 && cd DeepSeek-V4-Flash-0731-Abliterated-GX10 && ./run.sh
+```
+
+Expected: **46.88 tok/s** served-wall median on the structured-JSON fixture, single stream (21.50 tok/s without DSpark) — receipt: [`results/analysis.json`](results/analysis.json)
+
 ![DeepSeek V4 Flash 0731 Abliterated benchmark](card.png)
 
 **Best measured result: 46.88 served-wall tok/s median, rounded to 47 tok/s, versus a 21.50 tok/s plain baseline. That is 2.18x faster.**
